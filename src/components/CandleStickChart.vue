@@ -10,19 +10,20 @@
 </template>
 
 <script lang="ts">
-import { Prop } from "vue-facing-decorator";
-import { Options, Vue } from "vue-class-component";
+import { Component, Vue, Prop } from 'vue-facing-decorator'
 import VueApexCharts from "vue3-apexcharts";
 
-@Options({
+@Component({
   components: {
     VueApexCharts,
   },
 })
-
 export default class CandleStickChart extends Vue {
-  @Prop()
-  candles = [];
+    @Prop({default: []}) candles!:[]
+
+  mounted() {
+    console.log(this.candles)
+  }
 
   chartOption = {
     chart: {
@@ -31,7 +32,7 @@ export default class CandleStickChart extends Vue {
     },
     title: {
       text: "Bitcoin last prices",
-      align: "center",
+      align: "left",
     },
     xaxis: {
       type: "time",
@@ -45,9 +46,9 @@ export default class CandleStickChart extends Vue {
   
   get series() {
     const series = [{
-    data: this.candles
-  }]
-  return series
+        data: this.candles
+    }]
+    return series
   }
 }
 </script>
